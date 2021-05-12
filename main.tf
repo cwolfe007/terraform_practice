@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
       bucket = "tfstatebucket-5c2c94d78afb4d233ed54a70fea8d6cb"
-      key="test-prefix/"
+      key="test-prefix/state"
       region = "us-east-1"
   }
   required_providers {
@@ -14,32 +14,19 @@ terraform {
   required_version = ">=0.14.9"
 }
 
-variable "instance_name" {
-    description = "Value of the name of the EC2 instance"
-    type = string
-    default = "GETRICKITYWRECKEDSON"
+module "caleb_ec2" {
+  source = "./modules/caleb_ec2"
+  instance_name = "sourced from module"
 }
 
-provider "aws" {
-  profile = "default"
-  region  = "us-east-1"
+output "ec2_name" {
+    value = module.caleb_ec2.name
 }
 
-resource "aws_instance" "app_server" {
-  ami           = "ami-09e67e426f25ce0d7"
-  instance_type = "t2.micro"
-  tags = {
-    "Name" = var.instance_name
-    "ANewTag" = "wow such change"
-  }
+output "ec2_id" {
+    value = module.caleb_ec2.instance_id
 }
 
-output "instance_id" {
-    description ="ID of the EC2 instance"
-    value = aws_instance.app_server.id
-}
-
-output "instance_pub_ip" {
-    description = "Public IP"
-    value = aws_instance.app_server.public_ip
+output "ec2_pub_ip" {
+    value = module.caleb_ec2.instance_pub_ip
 }
