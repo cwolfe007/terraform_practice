@@ -1,4 +1,9 @@
 terraform {
+  backend "s3" {
+      bucket = "tfstatebucket-5c2c94d78afb4d233ed54a70fea8d6cb"
+      key="/"
+      region = "us-east-1"
+  }
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -27,4 +32,14 @@ resource "aws_instance" "app_server" {
     "Name" = var.instance_name
     "ANewTag" = "wow such change"
   }
+}
+
+output "instance_id" {
+    description ="ID of the EC2 instance"
+    value = aws_instance.app_server.id
+}
+
+output "instance_pub_ip" {
+    description = "Public IP"
+    value = aws_instance.app_server.public_ip
 }
