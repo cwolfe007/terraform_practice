@@ -9,3 +9,8 @@ variable "region" {
     type = string
     default = "us-east-1"
 }
+
+variable "ami" {
+    description = "Value of the name of the region"
+    type = string
+}
