@@ -7,7 +7,7 @@ Created aliases to replace commands with docker:
 
 `alias terraform='docker run -it --rm --env-file=$PWD/env_file_aws -v $PWD:$PWD -w $PWD hashicorp/terraform'`
 
-Created `env_file_aws` that looks like:
+Create `env_file_aws` that looks like:
 ```
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
