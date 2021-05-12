@@ -14,8 +14,8 @@ terraform {
   required_version = ">=0.14.9"
 }
 
-module "caleb_ec2" {
-  source = "./modules/caleb_ec2"
+module "caleb-ec2" {
+  source = "modules/terraform-aws-caleb-ec2"
   instance_name = terraform.workspace == "default" ? "DEFAULT" : "NOT-DEFAULT"
   region = terraform.workspace == "default" ? "us-east-1" : "us-west-2"
   ami =  terraform.workspace == "default" ? "ami-09e67e426f25ce0d7" : "ami-0cf6f5c8a62fa5da6"
